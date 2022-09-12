@@ -140,63 +140,7 @@ class _HomePageState extends State<HomePage> {
           final List<LocalRestaurant> restaurants =
               parseRestaurants(snapshot.data);
 
-          if (snapshot.connectionState == ConnectionState.done) {
-            return RefreshIndicator(
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 30,
-                  ),
-                  child: Column(
-                    children: [
-                      headerContent(restaurants),
-                      Expanded(
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: _foundRequests.length,
-                          itemBuilder: (context, index) {
-                            return (_foundRequests.isNotEmpty)
-                                ? RestaurantTile(
-                                    dataRestaurant: _foundRequests[index])
-                                : Center(
-                                    child: Text(
-                                      'Belum ada data restaurant yang tersedia',
-                                      style: blackTextStyle.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: semiBold,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  );
-                          },
-                        ),
-                      ),
-                      const SizedBox(height: 100),
-                    ],
-                  ),
-                ),
-              ),
-              onRefresh: () {
-                return Future.delayed(
-                  const Duration(seconds: 3),
-                  () {
-                    setAllDataRestaurant();
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: kGreenColor,
-                        content: const Text('Yeay data berhasil diperbarui.'),
-                      ),
-                    );
-                  },
-                );
-              },
-            );
-          } else {
+          if (snapshot.connectionState != ConnectionState.done) {
             return SingleChildScrollView(
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -211,6 +155,83 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             );
+          } else {
+            if (snapshot.hasData) {
+              return RefreshIndicator(
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 30,
+                    ),
+                    child: Column(
+                      children: [
+                        headerContent(restaurants),
+                        Expanded(
+                          child: ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: _foundRequests.length,
+                            itemBuilder: (context, index) {
+                              return (_foundRequests.isNotEmpty)
+                                  ? RestaurantTile(
+                                      dataRestaurant: _foundRequests[index])
+                                  : Center(
+                                      child: Text(
+                                        'Belum ada data restaurant yang tersedia',
+                                        style: blackTextStyle.copyWith(
+                                          fontSize: 12,
+                                          fontWeight: semiBold,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 100),
+                      ],
+                    ),
+                  ),
+                ),
+                onRefresh: () {
+                  return Future.delayed(
+                    const Duration(seconds: 3),
+                    () {
+                      setAllDataRestaurant();
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: kGreenColor,
+                          content: const Text('Yeay data berhasil diperbarui.'),
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text(snapshot.error.toString()),
+              );
+            } else {
+              return SingleChildScrollView(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 30,
+                  ),
+                  child: Column(
+                    children: [
+                      headerContent(restaurants),
+                      placeholderWhenLoading(),
+                    ],
+                  ),
+                ),
+              );
+            }
           }
         },
       );

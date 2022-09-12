@@ -16,8 +16,6 @@ class DetailRestaurantPage extends StatefulWidget {
 }
 
 class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
-  bool isExpand = false;
-
   @override
   Widget build(BuildContext context) {
     Widget backButton() {
@@ -85,18 +83,6 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
             builder: (context, scrollController) {
               return NotificationListener(
                 onNotification: (Notification notif) {
-                  if (notif is ScrollEndNotification) {
-                    if (notif.metrics.minScrollExtent == -1.0) {
-                      setState(() {
-                        isExpand = true;
-                      });
-                    } else {
-                      setState(() {
-                        isExpand = false;
-                      });
-                    }
-                  }
-
                   return true;
                 },
                 child: SingleChildScrollView(
