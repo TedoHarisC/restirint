@@ -1,6 +1,6 @@
-# restirint
+# Restirint App
 
-A new Flutter project.
+an application for searching restaurants and showing detailed restaurant information for submission coding in flutter fundamental learning class.
 
 ## Getting Started
 
