@@ -2,6 +2,15 @@
 
 Application for searching restaurants and showing detailed restaurant information for Submission Dicoding (Flutter Fundamental Learning Class)
 
+Star⭐ the repo if you like.
+
+## 📸 ScreenShots
+
+<img src="assets/1.png"/>
+
+## Author(s)
+**Tedo Haris Chandra** ([Follow my Instagram](https://instagram.com/dooooo.dev))
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
