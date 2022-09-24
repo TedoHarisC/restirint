@@ -1,6 +1,6 @@
 # Restirint App
 
-an application for searching restaurants and showing detailed restaurant information for submission coding in flutter fundamental learning class.
+Application for searching restaurants and showing detailed restaurant information for Submission Dicoding (Flutter Fundamental Learning Class)
 
 ## Getting Started
 
